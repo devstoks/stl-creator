@@ -1,0 +1,51 @@
+{
+  "poc_cortador": {
+    "arquivo": "poc_cortador.stl",
+    "tamanho_bytes": 7388284,
+    "faces": 147764,
+    "extensao_mm": [
+      36.38,
+      33.777,
+      10.0
+    ],
+    "coordenadas_finitas": true,
+    "faces_degeneradas": 0,
+    "watertight": true,
+    "orientacao_consistente": true,
+    "volume_mm3": 1296.13,
+    "componentes": 1,
+    "status": "APROVADO"
+  },
+  "poc_carimbo_base": {
+    "arquivo": "poc_carimbo_base.stl",
+    "tamanho_bytes": 42084,
+    "faces": 840,
+    "extensao_mm": [
+      28.983,
+      26.379,
+      1.5
+    ],
+    "coordenadas_finitas": true,
+    "faces_degeneradas": 0,
+    "watertight": true,
+    "orientacao_consistente": true,
+    "volume_mm3": 665.89,
+    "componentes": 1,
+    "status": "APROVADO"
+  },
+  "comparacao_com_referencia_carrinho": {
+    "extensao_ref_mm": [
+      35.85,
+      33.25,
+      10.0
+    ],
+    "extensao_poc_mm": [
+      36.38,
+      33.78,
+      10.0
+    ],
+    "volume_ref_mm3": 1231.9,
+    "volume_poc_mm3": 1296.1,
+    "diferenca_volume_pct": 5.2
+  }
+}

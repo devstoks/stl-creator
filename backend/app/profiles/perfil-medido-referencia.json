@@ -1,0 +1,19 @@
+{
+  "versao_formato": 1,
+  "nome": "Medido nos STL de referência (PENDENTE de confirmação)",
+  "aviso": "Valores medidos em Cortador.stl e Carimbo.stl. Não são o padrão oficial até a fábrica confirmar.",
+  "parametros": {
+    "altura_total_mm": {"valor": 10.0, "origem": "medido"},
+    "altura_aba_base_mm": {"valor": 1.5, "origem": "medido"},
+    "espessura_parede_mm": {"valor": 0.8, "origem": "medido"},
+    "inclinacao_parede_graus": {"valor": 5.0, "origem": "medido"},
+    "largura_aba_mm": {"valor": 2.0, "origem": "medido"},
+    "aba_integrada_a_parede": {"valor": null, "origem": "pendente"},
+    "carimbo_altura_base_mm": {"valor": 1.5, "origem": "medido"},
+    "carimbo_altura_relevo_mm": {"valor": 3.0, "origem": "medido"},
+    "folga_carimbo_parede_mm": {"valor": 0.9, "origem": "medido"},
+    "marcador_diametro_mm": {"valor": 15.0, "origem": "medido"},
+    "espessura_minima_linha_relevo_mm": {"valor": null, "origem": "pendente"},
+    "distancia_minima_elementos_mm": {"valor": null, "origem": "pendente"}
+  }
+}

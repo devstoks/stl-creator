@@ -1,0 +1,12 @@
+{
+  "_aviso": "Valores medidos em Cortador.stl (carrinho/body). Pendentes de confirmação.",
+  "altura_total_mm": 10.0,
+  "altura_aba_base_mm": 1.5,
+  "espessura_parede_mm": 0.8,
+  "inclinacao_parede_graus": 5.0,
+  "largura_aba_mm": 2.0,
+  "carimbo_altura_base_mm": 1.5,
+  "carimbo_altura_relevo_mm": 3.0,
+  "folga_carimbo_parede_mm": 0.9,
+  "passo_camada_mm": 0.25
+}

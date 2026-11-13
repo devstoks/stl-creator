@@ -1,0 +1,17 @@
+BISCUIT 3D STUDIO - como usar
+=============================
+1. Extraia o arquivo .zip inteiro numa pasta (nao execute de dentro do zip).
+2. De duplo clique em  Biscuit3DStudio  (Windows: Biscuit3DStudio.exe).
+   - Uma janela preta (console) vai abrir: ela e o programa. NAO a feche enquanto estiver usando.
+   - Em alguns segundos o navegador abre sozinho. Se nao abrir, digite no navegador: http://127.0.0.1:8765
+3. Arraste uma imagem (PNG/JPG) ou SVG para a janela do navegador e siga os passos numerados.
+4. Para encerrar: feche a janela preta.
+
+Windows pode mostrar "O Windows protegeu o computador" (SmartScreen) porque o programa nao e assinado:
+clique em "Mais informacoes" e depois em "Executar assim mesmo".
+Se o antivirus bloquear, adicione a pasta do programa as excecoes.
+
+Seus projetos e exportacoes ficam na pasta do usuario, em  Biscuit3D
+(Windows: C:\Users\SEU_NOME\Biscuit3D   |   Mac: /Users/SEU_NOME/Biscuit3D)
+
+O programa funciona sem internet e nao envia nenhum arquivo para fora do seu computador.
