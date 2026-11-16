@@ -1,4 +1,4 @@
-import type { ParamMeta, ParamsVetorizacao, Perfil, Resultado, Vetor } from "./types";
+import type { ParamMeta, ParamsRelevo, ParamsVetorizacao, Perfil, PreviaRelevo, Resultado, Vetor } from "./types";
 
 async function chamar<T>(url: string, init?: RequestInit): Promise<T> {
   let r: Response;
@@ -32,6 +32,8 @@ export const api = {
   },
   revetorizar: (id: string, params: ParamsVetorizacao) =>
     chamar<Vetor>(`/api/projects/${id}/vectorize`, json({ params })),
+  previaRelevo: (id: string, corpo: { papeis: Record<number, string>; perfil: Perfil; largura_mm: number; params: ParamsRelevo }) =>
+    chamar<PreviaRelevo>(`/api/projects/${id}/relief`, json(corpo)),
   gerar: (id: string, corpo: unknown) => chamar<Resultado>(`/api/projects/${id}/generate`, json(corpo)),
   projetos: () => chamar<{ projetos: { id: string; nome: string; tem_modelo: boolean }[] }>("/api/projects"),
   abrir: (id: string) => chamar<{ id: string; vetor: Vetor; projeto: { requisicao: any } | null; estado_ui: any }>(`/api/projects/${id}`),

@@ -1,4 +1,5 @@
 import type { ParamMeta, Perfil } from "../types";
+import { Icone } from "./Icones";
 
 interface Props {
   metas: ParamMeta[];
@@ -13,6 +14,8 @@ interface Props {
   onExcluir: () => void;
 }
 
+const ROTULO_ORIGEM: Record<string, string> = { medido: "medido nos seus STL", confirmado: "confirmado por você", pendente: "a confirmar" };
+
 export default function PainelPerfil(p: Props) {
   const atual = p.perfis.find((x) => x.id === p.perfilId);
   const grupos = Array.from(new Set(p.metas.map((m) => m.grupo)));
@@ -20,26 +23,29 @@ export default function PainelPerfil(p: Props) {
   return (
     <div className="painel-perfil">
       <div className="linha">
-        <select value={p.perfilId} onChange={(e) => p.onSelecionar(e.target.value)}>
-          {p.perfis.map((x) => <option key={x.id} value={x.id}>{x.nome}</option>)}
+        <select value={p.perfilId} onChange={(e) => p.onSelecionar(e.target.value)} aria-label="Perfil de fabricação">
+          {p.perfis.map((x) => <option key={x.id} value={x.id}>{x.nome}{x.protegido ? " (padrão da fábrica)" : ""}</option>)}
         </select>
       </div>
       <div className="linha botoes">
-        <button onClick={p.onSalvar} disabled={!atual || atual.protegido || !p.alterado} title={atual?.protegido ? "O perfil padrão é protegido: use 'Salvar como novo'" : ""}>Salvar</button>
-        <button onClick={p.onSalvarComo}>Salvar como novo</button>
-        <button className="perigo" onClick={p.onExcluir} disabled={!atual || atual.protegido}>Excluir</button>
+        <button className="sec" onClick={p.onSalvar} disabled={!atual || atual.protegido || !p.alterado}
+                title={atual?.protegido ? "O perfil padrão é protegido: use “Salvar como novo”" : ""}>Salvar</button>
+        <button className="sec" onClick={p.onSalvarComo}><Icone nome="mais" tam={15} /> Salvar como novo</button>
+        <button className="sec perigo" onClick={p.onExcluir} disabled={!atual || atual.protegido}>Excluir</button>
       </div>
-      {p.alterado && <p className="dica">Há alterações não salvas neste perfil (elas já valem para o próximo modelo gerado).</p>}
+      {atual?.protegido && <p className="dica">O perfil padrão não pode ser alterado. Mude os valores à vontade e use <b>Salvar como novo</b> para guardar a sua versão.</p>}
+      {p.alterado && <p className="dica">Você mudou valores neste perfil. Eles já valem para o próximo modelo gerado.</p>}
       {grupos.map((g) => (
         <fieldset key={g}>
           <legend>{g}</legend>
           {p.metas.filter((m) => m.grupo === g).map((m) => {
             const v = p.perfil[m.chave];
+            const o = origem[m.chave] ?? m.origem;
             return (
               <div key={m.chave} className="param">
                 <label>
                   <span>{m.titulo}{m.unidade && <em> ({m.unidade})</em>}
-                    <i className={`origem o-${origem[m.chave] ?? m.origem}`}>{origem[m.chave] ?? m.origem}</i></span>
+                    <i className={`origem o-${o}`}>{ROTULO_ORIGEM[o] ?? o}</i></span>
                   {typeof v === "boolean" ? (
                     <input type="checkbox" checked={v} onChange={(e) => p.onMudar(m.chave, e.target.checked)} />
                   ) : (

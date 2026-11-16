@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
+import { Icone } from "./Icones";
 
-interface Props { url: string | null; }
+interface Props { url: string | null; tema?: "escuro" | "claro"; }
 
-export default function Visualizador3D({ url }: Props) {
+export default function Visualizador3D({ url, tema = "escuro" }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const [wire, setWire] = useState(false);
   const [orto, setOrto] = useState(false);
@@ -22,12 +23,13 @@ export default function Visualizador3D({ url }: Props) {
     renderer.setSize(w(), h());
     el.appendChild(renderer.domElement);
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf2f4f7);
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8f98, 0.9));
+    const escuro = tema === "escuro";
+    scene.background = new THREE.Color(escuro ? 0x0a1118 : 0xecfdf9);
+    scene.add(new THREE.HemisphereLight(0xffffff, escuro ? 0x3b4650 : 0x8a8f98, escuro ? 1.0 : 0.9));
     const sol = new THREE.DirectionalLight(0xffffff, 1.1);
     sol.position.set(60, -80, 120);
     scene.add(sol);
-    const grade = new THREE.GridHelper(200, 40, 0xb7bcc5, 0xdde1e7);
+    const grade = new THREE.GridHelper(200, 40, escuro ? 0x2a4a55 : 0x99d8cf, escuro ? 0x16262f : 0xcdeee8);
     grade.rotation.x = Math.PI / 2;
     scene.add(grade);
     const ax = new THREE.AxesHelper(20);
@@ -44,7 +46,7 @@ export default function Visualizador3D({ url }: Props) {
     const controles = new OrbitControls(cam, renderer.domElement);
     controles.enableDamping = true;
 
-    const mat = new THREE.MeshStandardMaterial({ color: 0x4f8ef7, roughness: 0.55, metalness: 0.05, wireframe: wire });
+    const mat = new THREE.MeshStandardMaterial({ color: escuro ? 0x34e0c8 : 0x2dd4bf, roughness: 0.5, metalness: 0.05, wireframe: wire });
     estado.current.mat = mat;
     let vivo = true;
     setErro("");
@@ -70,7 +72,7 @@ export default function Visualizador3D({ url }: Props) {
         ortoCam.top = raio * 0.9 * h() / w(); ortoCam.bottom = -raio * 0.9 * h() / w();
         ortoCam.updateProjectionMatrix();
         controles.update();
-      }, undefined, () => setErro("Não consegui carregar o STL."));
+      }, undefined, () => setErro("Não consegui mostrar o modelo 3D. Tente gerar de novo."));
     }
     const redimensionar = () => {
       renderer.setSize(w(), h());
@@ -85,7 +87,7 @@ export default function Visualizador3D({ url }: Props) {
       estado.current.mesh?.geometry.dispose(); mat.dispose(); renderer.dispose();
       el.removeChild(renderer.domElement);
     };
-  }, [url, orto]);
+  }, [url, orto, tema]);
 
   useEffect(() => { if (estado.current.mat) estado.current.mat.wireframe = wire; }, [wire]);
   useEffect(() => { if (estado.current.eixos) estado.current.eixos.visible = eixos; }, [eixos]);
@@ -93,13 +95,14 @@ export default function Visualizador3D({ url }: Props) {
   return (
     <div className="viz3d">
       <div className="barra-2d">
-        <label><input type="checkbox" checked={wire} onChange={(e) => setWire(e.target.checked)} /> Wireframe</label>
-        <label><input type="checkbox" checked={orto} onChange={(e) => setOrto(e.target.checked)} /> Ortográfica</label>
+        <span className="dica-barra"><Icone nome="mover" tam={16} /> Arraste para girar · roda do mouse = zoom · botão direito = mover</span>
+        <label><input type="checkbox" checked={wire} onChange={(e) => setWire(e.target.checked)} /> Ver a malha</label>
+        <label><input type="checkbox" checked={orto} onChange={(e) => setOrto(e.target.checked)} /> Sem perspectiva</label>
         <label><input type="checkbox" checked={eixos} onChange={(e) => setEixos(e.target.checked)} /> Eixos</label>
-        {dim && <span className="dim">X {dim[0].toFixed(2)} × Y {dim[1].toFixed(2)} × Z {dim[2].toFixed(2)} mm</span>}
+        {dim && <span className="dim">{dim[0].toFixed(1)} × {dim[1].toFixed(1)} × {dim[2].toFixed(1)} mm</span>}
       </div>
       <div ref={host} className="canvas3d">
-        {!url && <div className="vazio">Gere o modelo para ver a prévia 3D (é o STL real).</div>}
+        {!url && <div className="vazio">O modelo 3D aparece aqui depois de gerar.</div>}
         {erro && <div className="vazio">{erro}</div>}
       </div>
     </div>

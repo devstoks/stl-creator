@@ -40,5 +40,17 @@ export interface Validacao {
 export interface Resultado {
   tipo: Tipo; status: Validacao["status"]; avisos: string[]; tempo_s: number;
   desenho_mm?: number[];
+  relevo_auto?: { n_pecas: number; area_mm2: number };
+  carimbo_liso?: boolean;
   arquivos: { nome: string; validacao: Validacao }[];
 }
+
+export interface ParamsRelevo {
+  ativo: boolean;
+  modo: "ambos" | "linhas" | "escuras";
+  detalhe: number;
+  linha_mm: number | null;
+  margem_borda_mm: number;
+}
+export interface PoligonoRelevo { pontos: [number, number][]; buracos: [number, number][][]; }
+export interface PreviaRelevo { poligonos: PoligonoRelevo[]; n_pecas: number; area_mm2: number; }
